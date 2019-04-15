@@ -7,10 +7,12 @@ A .c script playing a random House-Soundfile each time it's activated.
 For Example: If PUFFER is set to 5, the following is possible...
 
 G S H R
+
 0 5 5 5
 
 But following is not, because G and R are more than PUFFER(=5) apart.
 
 G S H R
+
 0 5 5 6
 
