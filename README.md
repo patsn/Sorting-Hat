@@ -16,5 +16,5 @@ The only House 'random' can chose from G (Gryffindor)
 
 >G S H R
 >
->0 5 5 6
+>1 5 5 5
 
