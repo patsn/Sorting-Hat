@@ -6,13 +6,18 @@
 
 #define PIN_TRIGGER 29 // GPIO21
 #define PIN_ECHO 28 // GPIO20
-#define Puffer 2
+#define Puffer 2 // The maximum ammount of difference between the lowest and highest, allready sortet Members.
+
+//unnecessary, dont touch it.
 
 long getMicrotime(){
   struct timeval currentTime;
   gettimeofday(&currentTime, NULL);
   return currentTime.tv_sec * (int)1e6 + currentTime.tv_usec;
 }
+
+
+//int float pinMode.. you know the shit.
 
 int main(void)
 {
@@ -30,29 +35,34 @@ int main(void)
   int RaveMitglieder = 0;
 
 
+//Sensor-Range-Check
+  
  for(;;){
      digitalWrite(PIN_TRIGGER, HIGH);
      usleep(10);
      digitalWrite(PIN_TRIGGER, LOW);
-
-      lowHigh = highLow = echo = previousEcho = 0;
-    while(0 == lowHigh || highLow == 0) {
-    previousEcho = echo;
-    echo = digitalRead(PIN_ECHO);
-    if(0 == lowHigh && 0 == previousEcho && 1 == echo) {
-      lowHigh = 1;
-      startTime = getMicrotime();
-    }
-    if(1 == lowHigh && 1 == previousEcho && 0 == echo) {
-      highLow = 1;
-      stopTime = getMicrotime();
-    }
-  }
+     lowHigh = highLow = echo = previousEcho = 0;
+        while(0 == lowHigh || highLow == 0) {
+            previousEcho = echo;
+            echo = digitalRead(PIN_ECHO);
+                if(0 == lowHigh && 0 == previousEcho && 1 == echo) {
+                    lowHigh = 1;
+                    startTime = getMicrotime();
+                }
+                if(1 == lowHigh && 1 == previousEcho && 0 == echo) {
+                     highLow = 1;
+                     stopTime = getMicrotime();
+                }
+          }
   difference = stopTime - startTime;
   rangeCm = difference / 58;
   printf("Range: %.0f cm\n",rangeCm);
   delay(500);
 
+   
+//Sorting People to random Houses.   
+//Checking if the Sensor-Module is trigged. 
+   
    if (rangeCm<=10) {
         ENTER:
         random = (rand() % 4);
@@ -86,39 +96,49 @@ int main(void)
                 system("omxplayer h-raven1.ogg ");
                 break;
         };
-    };
+};
 
-                                            while(rangeCm<=10){
-                                                digitalWrite(PIN_TRIGGER, HIGH);
-                                                 usleep(10);
-                                                 digitalWrite(PIN_TRIGGER, LOW);
+  
+   
+   
+//Loop until pressed Button is released.   
+//Sensor-Range-Check
+   
+ while(rangeCm<=10){
+    digitalWrite(PIN_TRIGGER, HIGH);
+    usleep(10);
+    digitalWrite(PIN_TRIGGER, LOW);
+    lowHigh = highLow = echo = previousEcho = 0;
+        while(0 == lowHigh || highLow == 0) {
+           previousEcho = echo;
+           echo = digitalRead(PIN_ECHO);
+                if(0 == lowHigh && 0 == previousEcho && 1 == echo) {
+                     lowHigh = 1;
+                     startTime = getMicrotime();
+                }
+                if(1 == lowHigh && 1 == previousEcho && 0 == echo) {
+                     highLow = 1;
+                     stopTime = getMicrotime();
+                }
+         }
+    difference = stopTime - startTime;
+    rangeCm = difference / 58;
 
-                                                  lowHigh = highLow = echo = previousEcho = 0;
-                                                while(0 == lowHigh || highLow == 0) {
-                                                previousEcho = echo;
-                                                echo = digitalRead(PIN_ECHO);
-                                                if(0 == lowHigh && 0 == previousEcho && 1 == echo) {
-                                                  lowHigh = 1;
-                                                  startTime = getMicrotime();
-                                                }
-                                                if(1 == lowHigh && 1 == previousEcho && 0 == echo) {
-                                                  highLow = 1;
-                                                  stopTime = getMicrotime();
-                                                }
-                                              }
-                                              difference = stopTime - startTime;
-                                              rangeCm = difference / 58;
-                                              system("clear");
-                                              printf("G S H R \n");
-                                              printf("%i %i %i %i \n",GryfMitglieder,SlythMitglieder,HuffMitglieder,RaveMitglieder);
-                                              printf("Range: %.0f cm WAITING\n",rangeCm);
-                                              delay(500);
+//Statusscreen with WAITING while Button is pressed.
+   
+   system("clear");
+   printf("G S H R \n");
+   printf("%i %i %i %i \n",GryfMitglieder,SlythMitglieder,HuffMitglieder,RaveMitglieder);
+   printf("Range: %.0f cm WAITING\n",rangeCm);
+   delay(500);
+};
+   
 
-                                              };
+//Statusscreen   
+   
 system("clear");
 printf("G S H R \n");
 printf("%i %i %i %i \n",GryfMitglieder,SlythMitglieder,HuffMitglieder,RaveMitglieder);
-
-  };
+};
   return 0;
 }
