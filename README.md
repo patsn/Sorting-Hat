@@ -1,17 +1,18 @@
 # Sorting-Hat
 Sorting Hat .c for Raspberry Pi 3 B+ using Wiring-Pi
 
-A .c script playing a random House-Soundfile each time a button is pressed on the chosen GPIO PIN.
+A .c script playing a random House-Soundfile each time an Ultra-Sonic-Sensor reaches a specified Range
 
-## PUFFER
-'PUFFER' is used, to not have a big spike between two Houses or more.
-For Example: If PUFFER is set to 5, the following is possible...
+#### PUFFER
+'PUFFER' is used to keep the random chosen Houses leveled.
+
+Puffer==5
 
 >G S H R
 >
 >0 5 5 5
 
-But following is not, because G and R are more than PUFFER(=5) apart.
+The only House 'random' can chose from G (Gryffindor)
 
 >G S H R
 >
