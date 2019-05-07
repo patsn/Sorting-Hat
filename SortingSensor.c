@@ -7,6 +7,8 @@
 #define PIN_TRIGGER 29 // GPIO21
 #define PIN_ECHO 28 // GPIO20
 #define Puffer 2 // The maximum ammount of difference between the lowest and highest, allready sortet Members.
+#define RangeHat 10 // Range, Sonic Sensor need to trigger.
+
 
 //unnecessary, dont touch it.
 
@@ -63,7 +65,7 @@ int main(void)
 //Sorting People to random Houses.   
 //Checking if the Sensor-Module is trigged. 
    
-   if (rangeCm<=10) {
+   if (rangeCm<=RangeHat) {
         ENTER:
         random = (rand() % 4);
         switch (random) {
@@ -104,7 +106,7 @@ int main(void)
 //Loop until pressed Button is released.   
 //Sensor-Range-Check
    
- while(rangeCm<=10){
+ while(rangeCm<=RangeHat){
     digitalWrite(PIN_TRIGGER, HIGH);
     usleep(10);
     digitalWrite(PIN_TRIGGER, LOW);
